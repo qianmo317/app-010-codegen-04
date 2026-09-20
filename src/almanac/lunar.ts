@@ -107,6 +107,27 @@ export function solarToLunar(year: number, month: number, day: number): LunarInf
   };
 }
 
+// 获取农历某年的闰月月份（0 表示无闰月）
+export function getLunarLeapMonth(lunarYear: number): number {
+  if (lunarYear < 1900 || lunarYear > 2100) {
+    throw new Error('Year out of range');
+  }
+  return LUNAR_YEAR_DATA[lunarYear - 1900].lm;
+}
+
+// 获取农历某月天数；指定闰月但当年并无该闰月时返回 null
+export function getLunarMonthLength(lunarYear: number, lunarMonth: number, isLeap: boolean = false): number | null {
+  if (lunarYear < 1900 || lunarYear > 2100 || lunarMonth < 1 || lunarMonth > 12) {
+    throw new Error('Invalid lunar date');
+  }
+
+  const data = LUNAR_YEAR_DATA[lunarYear - 1900];
+  if (isLeap) {
+    return data.lm === lunarMonth ? data.ld : null;
+  }
+  return data.md[lunarMonth - 1];
+}
+
 // 农历转公历
 export function lunarToSolar(lunarYear: number, lunarMonth: number, lunarDay: number, isLeap: boolean = false): [number, number, number] {
   if (lunarYear < 1900 || lunarYear > 2100) {

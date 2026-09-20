@@ -3,6 +3,7 @@ import { renderCalendar } from './pages/calendar';
 import { renderDayDetail } from './pages/day-detail';
 import { renderPick } from './pages/pick';
 import { renderFarm } from './pages/farm';
+import { renderReminders } from './pages/reminders';
 
 export function initApp() {
   const app = document.getElementById('app');
@@ -29,6 +30,9 @@ export function initApp() {
         break;
       case '/farm':
         renderFarm(app);
+        break;
+      case '/reminders':
+        renderReminders(app);
         break;
       default:
         renderCalendar(app);
@@ -611,6 +615,169 @@ function injectStyles() {
       border-bottom: none;
     }
 
+    /* 农历提醒 */
+    .reminder-settings {
+      display: grid;
+      gap: 12px;
+    }
+
+    .permission-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-light);
+      font-size: 13px;
+    }
+
+    .permission-btn {
+      flex: none;
+    }
+
+    .reminder-sections {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .reminder-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .reminder-item {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      background: white;
+    }
+
+    .reminder-item-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .reminder-name {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .reminder-days {
+      flex: none;
+      padding: 4px 10px;
+      border-radius: 14px;
+      font-weight: bold;
+      font-size: 13px;
+    }
+
+    .reminder-days.urgency-today { background: #ffebee; color: var(--accent); }
+    .reminder-days.urgency-soon { background: #fff3e0; color: #e65100; }
+    .reminder-days.urgency-near { background: #e8f5e9; color: var(--secondary); }
+    .reminder-days.urgency-later { background: #f5f5f5; color: var(--text-light); }
+
+    .reminder-lines {
+      display: grid;
+      gap: 6px;
+      font-size: 14px;
+    }
+
+    .reminder-line {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 8px;
+    }
+
+    .reminder-line-label {
+      color: var(--text-light);
+      flex: none;
+    }
+
+    .reminder-line-value {
+      color: var(--text);
+    }
+
+    .reminder-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .small-btn {
+      padding: 5px 10px;
+      border: 1px solid var(--primary);
+      background: white;
+      color: var(--primary);
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .small-btn:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .small-btn.danger-btn {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .small-btn.danger-btn:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    .priority-label {
+      color: var(--text-light);
+      font-size: 12px;
+    }
+
+    .reminder-form-card .reminder-field,
+    .reminder-settings .reminder-field {
+      display: grid;
+      gap: 6px;
+      margin-bottom: 14px;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .reminder-form-card input,
+    .reminder-form-card select,
+    .reminder-settings input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: normal;
+      color: var(--text);
+    }
+
+    .reminder-hint {
+      color: var(--text-light);
+      font-size: 13px;
+      margin: -4px 0 12px;
+    }
+
+    .reminder-error {
+      color: var(--accent);
+      font-size: 13px;
+      min-height: 20px;
+    }
+
+    .empty-reminders {
+      color: var(--text-light);
+      font-size: 14px;
+    }
+
     /* 响应式 */
     @media (max-width: 600px) {
       .page { padding: 8px; }
@@ -620,6 +787,10 @@ function injectStyles() {
       .yiji-row { flex-direction: column; }
       .hour-row { grid-template-columns: 60px 80px 60px 50px; font-size: 13px; }
       .ganzhi { gap: 8px; font-size: 14px; }
+      .permission-row { align-items: flex-start; flex-direction: column; }
+      .reminder-line { grid-template-columns: 68px 1fr; }
+      .quick-nav { gap: 6px; }
+      .quick-link { padding: 6px 10px; }
     }
   `;
   document.head.appendChild(style);
