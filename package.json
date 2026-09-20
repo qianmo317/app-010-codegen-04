@@ -10,6 +10,9 @@
     "test:watch": "vitest"
   },
   "devDependencies": {
+    "chinese-lunar-calendar": "^1.0.1",
+    "jsdom": "^29.1.1",
+    "lunar-javascript": "^1.7.7",
     "typescript": "^5.4.0",
     "vite": "^5.2.0",
     "vitest": "^1.4.0"
